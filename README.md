@@ -1,4 +1,9 @@
 # Welcome to your Expo app 👋
+# 📱 HireMockApp – Expo App med AI-baserade mockintervjuer
+
+Detta är en **offline-first mobilapp** byggd med [Expo SDK 53](https://docs.expo.dev/versions/latest/). 
+## Appen hjälper jobbsökare att träna på intervjuer genom att simulera mockintervjuer med AI-feedback på röst, kroppsspråk och svar.
+
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
@@ -15,6 +20,24 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    npx expo start
    ```
+   ## Kör appen i emulator eller telefon:
+   npx expo run:android
+   ## Alternativt – starta med tunnel:
+   npx expo start --dev-client
+
+📁 Projektstruktur
+   app/
+├── (tabs)/              # Tab-navigering: Hem, Intervju, Historik, Profil
+│   ├── _layout.tsx      # Tabs-definition
+│   ├── index.tsx        # Hemskärm
+│   ├── interview.tsx
+│   ├── history.tsx
+│   └── profile.tsx
+├── _layout.tsx          # Root stack layout (om det behövs)
+components/              # UI-komponenter
+constants/               # Globala färger, text etc.
+
+
 
 In the output, you'll find options to open the app in a
 
