@@ -7,12 +7,16 @@ type ButtonProps = {
     variant?: 'primary' | 'secondary' | 'danger';
     icon?: ReactNode;
     isLoading?: boolean;
+    onPress?: () => void;
 };
 
 export default function Button({
     children,
     variant = 'primary',
-    icon, isLoading }: ButtonProps) {
+    icon, 
+    isLoading,
+    onPress
+}: ButtonProps) {
     return (
         <Pressable
             style={({ pressed }) => [
@@ -22,6 +26,7 @@ export default function Button({
                 isLoading && styles.loading
             ]}
             disabled={isLoading}
+            onPress={onPress}
         >
             <View style={styles.content}>
                 {isLoading ? (
@@ -38,7 +43,6 @@ export default function Button({
                     </>
                 )}
             </View>
-
         </Pressable>
     );
 }
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     secondaryText: {
-        color: '#0A2463',
+        color: '#FF3B30',
     },
     dangerText: {
         color: 'white',

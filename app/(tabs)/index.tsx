@@ -1,22 +1,35 @@
 import { Text, View, StyleSheet } from "react-native";
 import Button from '../components/buttons/Button'
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
  
 
 export default function HomeScreen() {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 24, fontWeight: "bold" }}>Välkommen till HireMock!</Text>
       <Text style={{ marginTop: 10 }}>Börja träna för din nästa intervju</Text>
-     <Button>Starta intervju</Button>
+     
      <Button 
+     variant="primary"
+     icon={<MaterialIcons name="play-arrow" size={24} color="#f0f3faff" />}
+     onPress={() => router.push('/interview')}>Starta intervju
+     </Button>
+      
+    <Button 
      variant="secondary"
-     icon={<MaterialIcons name="play-arrow" size={24} color="#0A2463" />}>Intervjuer</Button>
-     <Button 
-     variant="danger"
-     isLoading={true}
-    >Avsluta</Button>
-    </View>
+     //isLoading={true}
+    >Senaste intervjuer</Button>
+
+      <View style={styles.progressSection}>
+        <Text style={styles.progressText}>Din framsteg</Text>
+        <View style={styles.progressBar}>
+          <View style={[styles.progressFill, { width: '60%' }]} />
+        </View>
+        <Text style={styles.progressPercent}>60% komplett</Text>
+      </View>
+       </View>
   );
 }
 const styles = StyleSheet.create({
@@ -26,5 +39,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     gap: 15,
+  },
+   progressSection: {
+    width: '80%',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  progressText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  progressBar: {
+    width: '100%',
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#E0E0E0',
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#0A2463',
+    borderRadius: 5,
+  },
+   progressPercent: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 5,
   },
 });
