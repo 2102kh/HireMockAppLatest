@@ -13,7 +13,7 @@ type ButtonProps = {
 export default function Button({
     children,
     variant = 'primary',
-    icon, 
+    icon,
     isLoading,
     onPress
 }: ButtonProps) {
@@ -67,13 +67,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         textAlign: 'center',
-
     },
     icon: {
-
         width: 24,
         height: 24,
-
     },
     primary: {
         backgroundColor: '#0A2463',

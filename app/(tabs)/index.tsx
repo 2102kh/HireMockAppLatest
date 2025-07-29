@@ -2,10 +2,12 @@ import { Text, View, StyleSheet } from "react-native";
 import Button from '../components/buttons/Button'
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useInterview } from "@/hooks/useInterview";
  
 
 export default function HomeScreen() {
   const router = useRouter();
+  const {allInterviews} = useInterview();
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 24, fontWeight: "bold" }}>Välkommen till HireMock!</Text>
@@ -25,11 +27,13 @@ export default function HomeScreen() {
       <View style={styles.progressSection}>
         <Text style={styles.progressText}>Din framsteg</Text>
         <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: '60%' }]} />
+          <View style={[styles.progressFill, { width: `${Math.min(allInterviews.length * 20 , 100)}%` }]} />
         </View>
-        <Text style={styles.progressPercent}>60% komplett</Text>
+        <Text style={styles.progressPercent}>{Math.min(allInterviews.length * 20 , 100)}% komplett</Text>
+        <Text>Antal intervjuer: {allInterviews.length}</Text>
       </View>
        </View>
+
   );
 }
 const styles = StyleSheet.create({
