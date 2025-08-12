@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     },
     primary: {
         backgroundColor: '#0A2463',
+        //color: 'white',
     },
     secondary: {
         backgroundColor: 'transparent',
