@@ -1,6 +1,6 @@
-import { Pressable, Text, StyleSheet, View, ActivityIndicator } from "react-native";
+import { Pressable,  Text, View, ActivityIndicator } from "react-native"
 import { ReactNode } from "react";
-
+import { useTheme } from 'native-base';
 
 type ButtonProps = {
     children: ReactNode;
@@ -17,83 +17,68 @@ export default function Button({
     isLoading,
     onPress
 }: ButtonProps) {
-    return (
-        <Pressable
-            style={({ pressed }) => [
-                styles.button,
-                styles[variant],
-                pressed && styles.pressed,
-                isLoading && styles.loading
-            ]}
-            disabled={isLoading}
-            onPress={onPress}
-        >
-            <View style={styles.content}>
-                {isLoading ? (
-                    <>
-                        <ActivityIndicator
-                            color={variant === 'primary' || variant === 'danger' ? 'white' : '#0A2463'}
-                        />
-                        <Text style={[styles.text, styles[`${variant}Text`]]}>Laddar...</Text>
-                    </>
-                ) : (
-                    <>
-                        {icon && <View style={styles.icon}>{icon}</View>}
-                        <Text style={[styles.text, styles[`${variant}Text`]]}>{children}</Text>
-                    </>
-                )}
-            </View>
-        </Pressable>
-    );
-}
+  const theme = useTheme();
 
-const styles = StyleSheet.create({
-    button: {
-        backgroundColor: '#0A2463',
-        padding: 14,
-        borderRadius: 8,
-        width: '90%',
-    },
-    pressed: {
-        opacity: 0.8,
-    },
-    content: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 4,
-    },
-    text: {
-        fontSize: 18,
-        fontWeight: '600',
-        textAlign: 'center',
-    },
-    icon: {
-        width: 24,
-        height: 24,
-    },
-    primary: {
-        backgroundColor: '#0A2463',
-        //color: 'white',
-    },
-    secondary: {
-        backgroundColor: 'transparent',
-        borderWidth: 2,
-        borderColor: '#072a48ff',
-    },
-    danger: {
-        backgroundColor: '#FF3B30',
-    },
-    primaryText: {
-        color: 'white',
-    },
-    secondaryText: {
-        color: '#FF3B30',
-    },
-    dangerText: {
-        color: 'white',
-    },
-    loading: {
-        opacity: 0.6,
+    const getBackgroundColor = () => {
+    switch (variant) {
+      case "primary":
+        return theme.colors.primary[400];
+      case "secondary":
+        return "transparent";
+      case "danger":
+        return theme.colors.secondary[600];
+      default:
+        return theme.colors.primary[400];
     }
-});
+  };
+
+  const getTextColor = () => {
+    switch (variant) {
+      case "primary":
+      case "danger":
+        return "white";
+      case "secondary":
+        return theme.colors.primary[700];
+      default:
+        return "white";
+    }
+  };
+
+   return (
+    <Pressable
+      style={({ pressed }) => [
+        {
+          backgroundColor: getBackgroundColor(),
+          padding: theme.space[3.5],
+          borderRadius: theme.radii.md,
+          borderWidth: variant === "secondary" ? 2 : 0,
+          borderColor: variant === "secondary" ? theme.colors.primary[400] : "transparent",
+          opacity: pressed ? 0.8 : 1,
+          width: '90%',
+          maxWidth:400,
+        },
+        isLoading && { opacity: 0.6 },
+      ]}
+      disabled={isLoading}
+      onPress={onPress}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+        {isLoading ? (
+          <>
+            <ActivityIndicator color={getTextColor()} />
+            <Text style={{ color: getTextColor(), fontSize: theme.fontSizes.lg, fontWeight: '500' }}>
+              Laddar...
+            </Text>
+          </>
+        ) : (
+          <>
+            {icon && <View>{icon}</View>}
+            <Text style={{ color: getTextColor(), fontSize: theme.fontSizes.lg, fontWeight: '700' }}>
+              {children}
+            </Text>
+          </>
+        )}
+      </View>
+    </Pressable>
+  );
+}
